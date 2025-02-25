@@ -1,7 +1,10 @@
 import React from 'react'
 
 import appointment_img from '../../assets/assets_frontend/appointment_img.png'
+import { useNavigate } from 'react-router-dom'
 const Banner = () => {
+
+const navigate =  useNavigate()
   return (
     <div className='flex bg-primaryColor  md:rounded-lg px-6 sm:px-10 md:px-14 lg:px-12 my-20 md:mx-10'>
       <div className='flex-1 py-8 sm:py-10 md:py16 lg:py-24 lg:pl-5'>
@@ -9,7 +12,7 @@ const Banner = () => {
             <p>Book Appointment</p>
             <p className='mt-4'>With 100+ Trusted Doctors</p>
         </div>
-        <button
+        <button onClick={() => navigate("/login") }
             className="relative mt-6 overflow-hidden bg-white text-black py-3 px-8 rounded-full font-roboto transition-all duration-500 
   before:absolute before:inset-0 before:bg-buttonColor before:scale-x-0 before:origin-center 
   hover:before:scale-x-100 hover:text-white font-semibold tracking-wide before:transition-transform before:duration-500 

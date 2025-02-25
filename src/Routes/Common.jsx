@@ -16,9 +16,9 @@ const Common = () => {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/doctors" element={<Doctors/>} />
-        <Route path="/contact-Us" element={<ContactUs/>} />
+        <Route path="/contact-us" element={<ContactUs/>} />
         <Route path="/about" element={<About/>} />
-        <Route path="/doctor-profile" element={<DoctorProfile/>} />
+        <Route path="/doctor-profile/:id" element={<DoctorProfile/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<SignUp/>} />
       </Routes>

@@ -12,7 +12,7 @@ const ServiceCard = ({ image, title, description, show, image_white}) => {
 
 
   return (
-    <div ref={ref} className={`card   transform duration-1000 ease-out transition-all delay-300 ${inView ? "opacity-100 scale-x-100  "  : "opacity-0 scale-0 "} `}>
+    <div ref={ref} className={`card transform duration-1000 ease-out transition-all delay-300 ${inView ? "opacity-100 scale-x-100  "  : "opacity-0 scale-0 "} `}>
       <div className="inner">
         {/* Front Side */}
         <div className="front">

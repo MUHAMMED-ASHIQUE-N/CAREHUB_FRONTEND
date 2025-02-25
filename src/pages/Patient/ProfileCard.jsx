@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../../components/Common/Navbar";
-import Sidebar from "../../components/Admin,Doctor,Pharmacy/Sidebar";
 
 
 const ProfileCard = () => {
@@ -9,7 +8,6 @@ const ProfileCard = () => {
 <Navbar/>
     <div className="flex justify-center items-center mt-[4.5rem] bg-gray-100 p-4">
       <div className="bg-white shadow-md rounded-lg w-[85%]">
-        <Sidebar/>
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-200 to-yellow-100 h-24 rounded-t-lg"></div>
 

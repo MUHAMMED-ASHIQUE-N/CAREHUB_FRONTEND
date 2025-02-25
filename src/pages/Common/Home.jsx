@@ -1,4 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../../components/Common/Navbar";
+import SectionHeading from "../../components/Common/SectionHeading";
+import Features from "../../components/Common/Features";
+import Speciality from "../../components/Common/Speciality";
+import ServiceCard from "../../components/Common/ServiceCard";
+import Footer from "../../components/Common/Footer";
+import DoctorCard from "../../components/Common/DoctorCard";
+import {DoctorsData} from '../../Constants/DoctorsData'
+
 // assets
 
 import caduceus from "../../assets/assets_frontend/caduceus.png";
@@ -8,21 +18,6 @@ import Dermatologist from "../../assets/assets_frontend/Dermatologist.svg";
 import Gynecologist from "../../assets/assets_frontend/Gynecologist.svg";
 import General_physician from "../../assets/assets_frontend/General_physician.svg";
 import Neurologist from "../../assets/assets_frontend/Neurologist.svg";
-import doc1 from "../../assets/assets_frontend/doc1.png";
-import doc2 from "../../assets/assets_frontend/doc2.png";
-import doc3 from "../../assets/assets_frontend/doc3.png";
-import doc4 from "../../assets/assets_frontend/doc4.png";
-import doc5 from "../../assets/assets_frontend/doc5.png";
-import doc6 from "../../assets/assets_frontend/doc6.png";
-import doc7 from "../../assets/assets_frontend/doc7.png";
-import doc8 from "../../assets/assets_frontend/doc8.png";
-import doc9 from "../../assets/assets_frontend/doc9.png";
-import doc10 from "../../assets/assets_frontend/doc10.png";
-import doc11 from "../../assets/assets_frontend/doc11.png";
-import doc12 from "../../assets/assets_frontend/doc12.png";
-import doc13 from "../../assets/assets_frontend/doc13.png";
-import doc14 from "../../assets/assets_frontend/doc14.png";
-import doc15 from "../../assets/assets_frontend/doc15.png";
 import serviceImg1 from  "../../assets/assets_frontend/prescription.svg"
 import serviceImg2 from  "../../assets/assets_frontend/listening.svg"
 import serviceImg3 from  "../../assets/assets_frontend/heart-beat-alt.svg"
@@ -35,52 +30,22 @@ import service_white_Img3 from  "../../assets/assets_frontend/heart-beat-alt_Whi
 import service_white_Img4 from  "../../assets/assets_frontend/eye-alt _White.svg"
 import service_white_Img5 from  "../../assets/assets_frontend/blood_White.svg"
 import service_white_Img6 from  "../../assets/assets_frontend/tooth_white.svg"
-import Navbar from "../../components/Common/Navbar";
-import SectionHeading from "../../components/Common/SectionHeading";
-import Features from "../../components/Common/Features";
-import Speciality from "../../components/Common/Speciality";
-import ServiceCard from "../../components/Common/ServiceCard";
-import Footer from "../../components/Common/Footer";
-import DoctorCard from "../../components/Common/DoctorCard";
 
 
-const serviceDetials = [
-  {_id: "serv1",title:"General Treatment",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg1, image_white:service_white_Img1,},
-  {_id: "serv2",title:"Ear Treatment",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg2,image_white:service_white_Img2,},
-  {_id: "serv3",title:"Heart Surgery",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg3,image_white:service_white_Img3,},
-  {_id: "serv4",title:"Vision Problems",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg4,image_white:service_white_Img4,},
-  {_id: "serv5",title:"Blood Transfusion",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg5,image_white:service_white_Img5,},
-  {_id: "serv6",title:"Teeth Whitening",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg6,image_white:service_white_Img6,},
-]
-
-const doctors = [
-  {_id: "doc1",name: "Dr. Richard James",image: doc1,speciality: "General physician",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "17th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc2",name: "Dr. Emily Larson",image: doc2,speciality: "Gynecologist",degree: "MBBS",experience: "3 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 60,address: {line1: "27th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc3",name: "Dr. Sarah Patel",image: doc3,speciality: "Dermatologist",degree: "MBBS",experience: "1 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 30,address: {line1: "37th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc4",name: "Dr. Christopher Lee",image: doc4,speciality: "Pediatricians",degree: "MBBS",experience: "2 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 40,address: {line1: "47th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc5",name: "Dr. Jennifer Garcia",image: doc5,speciality: "Neurologist",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "57th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc6",name: "Dr. Andrew Williams",image: doc6,speciality: "Neurologist",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "57th Cross, Richmond",line2: "Circle, Ring Road, London",}, },
-  {_id: "doc7",name: "Dr. Christopher Davis",image: doc7,speciality: "General physician",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "17th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc8",name: "Dr. Timothy White",image: doc8,speciality: "Gynecologist",degree: "MBBS",experience: "3 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 60,address: {line1: "27th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc9",name: "Dr. Ava Mitchell",image: doc9,speciality: "Dermatologist",degree: "MBBS",experience: "1 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 30,address: {line1: "37th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc10",name: "Dr. Jeffrey King",image: doc10,speciality: "Pediatricians",degree: "MBBS",experience: "2 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 40,address: {line1: "47th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc11",name: "Dr. Zoe Kelly",image: doc11,speciality: "Neurologist",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "57th Cross, Richmond",line2: "Circle, Ring Road, London",},},{_id: "doc12",name: "Dr. Patrick Harris",image: doc12,speciality: "Neurologist",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "57th Cross, Richmond",line2: "Circle, Ring Road, London",},},{_id: "doc13",name: "Dr. Chloe Evans",image: doc13,speciality: "General physician",degree: "MBBS",experience: "4 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 50,address: {line1: "17th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc14",name: "Dr. Ryan Martinez",image: doc14,speciality: "Gynecologist",degree: "MBBS",experience: "3 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 60,address: {line1: "27th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-  {_id: "doc15",name: "Dr. Amelia Hill",image: doc15,speciality: "Dermatologist",degree: "MBBS",experience: "1 Years",about:"Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Davis has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",fees: 30,address: {line1: "37th Cross, Richmond",line2: "Circle, Ring Road, London",},},
-];
-
-
-
-
-// const specialityData = [
-//     { speciality: 'General physician',image: General_physician},
-//     {speciality: 'Gynecologist',image: Gynecologist},
-//     {speciality: 'Dermatologist',image: Dermatologist},
-//     {speciality: 'Pediatricians',image: Pediatricians},
-//     {speciality: 'Neurologist',image: Neurologist},
-//     { speciality: 'Gastroenterologist', image: Gastroenterologist },
-//       ]
 const Home = () => {
+  
+  const serviceDetials = [
+    {_id: "serv1",title:"General Treatment",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg1, image_white:service_white_Img1,},
+    {_id: "serv2",title:"Ear Treatment",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg2,image_white:service_white_Img2,},
+    {_id: "serv3",title:"Heart Surgery",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg3,image_white:service_white_Img3,},
+    {_id: "serv4",title:"Vision Problems",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg4,image_white:service_white_Img4,},
+    {_id: "serv5",title:"Blood Transfusion",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg5,image_white:service_white_Img5,},
+    {_id: "serv6",title:"Teeth Whitening",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus dictum eros ut imperdiet.",image:serviceImg6,image_white:service_white_Img6,},
+  ]
+
+
+const navigate = useNavigate()
+
   return (
     <div className=" ">
       <div className='relative bg-[url("./assets/assets_frontend/banner-1.jpg")] bg-cover  h-[70vh] xl:h-[90vh]'>
@@ -106,7 +71,7 @@ const Home = () => {
   hover:before:scale-x-100 before:transition-transform before:duration-500 
    before:z-0 z-40"
               >
-                <span className="relative z-10">Get Appointment</span>
+                <span onClick={() => navigate("/doctors")} className="relative z-10">Get Appointment</span>
               </button>
 
               <button
@@ -115,7 +80,7 @@ const Home = () => {
   hover:before:scale-x-100 before:transition-transform before:duration-500 
    before:z-0 z-30"
               >
-                <span className="relative z-10">Contact Us</span>
+                <span onClick={() => navigate("/contact-us")} className="relative z-10">Contact Us</span>
               </button>
             </div>
           </div>
@@ -206,9 +171,10 @@ const Home = () => {
       </div>
       {/* //Doctoe cards */}
       <div className="mx-auto lg:w-[85%]  w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5  gap-4 py-10">
-        {doctors.slice(0, 10).map((val, index) => (
+        {DoctorsData.slice(0, 10).map((val, index) => (
           <div key={index}>
   <DoctorCard
+    id={val._id}
     image={val.image}
     name={val.name}
     speciality={val.speciality}
@@ -217,7 +183,7 @@ const Home = () => {
 
         ))}
       </div>
-
+   <p onClick={() => navigate("/doctors")} className="mx-auto w-20 py-1 bg-gray-100 my-5 rounded-full text-center">More</p>
       {/* //service */}
       <div className="py-10  bg-[#F4F4F4]">
         <div className="mx-auto w-[85%]">
@@ -274,7 +240,7 @@ const Home = () => {
   hover:before:scale-x-100 before:transition-transform before:duration-500 
    before:z-0 z-10"
           >
-            <span className="relative z-10">Get Appointment</span>
+            <span onClick={() => navigate("/doctors")} className="relative z-10">Get Appointment</span>
           </button>
         </div>
       </div>

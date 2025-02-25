@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Navbar_admin = () => {
+const Navbar_admin = ({department}) => {
   return (
     <div className='bg-white border-b w-full py-2 md:py-4'>
       <div className='flex justify-between  ' >
@@ -9,7 +9,7 @@ const Navbar_admin = () => {
                 <h1 className='text-2xl md:text-3xl font-viga text-primaryColor'>Carehub</h1>
                 <p className='text-[8px] md:text-xs text-gray-700y'>Dashboard panel</p>
             </div>
-         <button className='border h-8 px-3 md:px-5 rounded-full text-xs md:text-sm '> Admin </button>
+        <button className='border h-8 px-3 md:px-5 rounded-full text-xs md:text-sm '> {department} </button>
 
         </div>
         <div className='pr-5 md:pr-20' >   

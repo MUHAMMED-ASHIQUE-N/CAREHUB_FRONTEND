@@ -3,7 +3,7 @@ import Navbar_admin from '../../components/Admin,Doctor,Pharmacy/Navbar_admin'
 import Sidebar from '../../components/Admin,Doctor,Pharmacy/Sidebar'
 import patient_image from "../../assets/assets_frontend/doc1.png"
 import cancel_icon from "../../assets/assets_admin/cancel_icon.svg"
-import list_icon from "../../assets/assets_admin/list_icon.svg"
+import { AdminMenuItems } from "../../Constants/constants";
 
 
 const Appointments = () => {
@@ -73,10 +73,10 @@ const Appointments = () => {
 
   return (
     <div className="flex flex-col  h-[50vh]">
-    <Navbar_admin /> {/* Navbar on top */}
+    <Navbar_admin department={"Admin"}/> {/* Navbar on top */}
     <div className="flex flex-1">
       <div className="flex-shrink-0">
-        <Sidebar /> {/* Sidebar on the left */}
+        <Sidebar  menuItems={AdminMenuItems} /> {/* Sidebar on the left */}
       </div>
       <div className="flex-1 p-4 bg-gray-200 h-[88vh] overflow-y-scroll scrollbar-hide ">
       <h3 className="text-lg font-semibold mb-4 flex gap-3 items-center"> Appointments</h3>

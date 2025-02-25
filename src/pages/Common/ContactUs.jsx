@@ -2,8 +2,11 @@ import React from 'react'
 import Contact_image from '../../assets/assets_frontend/contact_image.png'
 import Navbar from '../../components/Common/Navbar'
 import Footer from '../../components/Common/Footer'
+import { useNavigate } from 'react-router-dom'
 
 const ContactUs = () => {
+
+  const navigate = useNavigate()
   return (
     <div>
 
@@ -31,7 +34,7 @@ const ContactUs = () => {
   hover:before:scale-x-100 before:transition-transform before:duration-500 
    before:z-0 z-40"
               >
-                <span className="relative z-10">Get Appointment</span>
+                <span  onClick={() => navigate("/doctors")} className="relative z-10">Get Appointment</span>
               </button>
         </div>
       </div>
@@ -44,66 +47,3 @@ export default ContactUs
 
 
 
-// import React from 'react';
-
-// const ContactUs = () => {
-//   return (
-//     <div className="p-6 bg-white rounded-lg shadow-md">
-//       <h1 className="text-2xl font-bold mb-4">My Appointments</h1>
-
-//       <div className="space-y-4">
-//  {/* Appointment 1 */}
-// <div className="p-4 border rounded-lg flex items-end space-x-4">
-//   {/* Image Placeholder */}
-//   <div className="w-40 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-//     <span className="text-gray-500">Image</span>
-//   </div>
-
-//   {/* Appointment Details (Aligned to Bottom) */}
-//   <div className="flex-1 flex flex-col justify-end">
-//     <h2 className="text-xl font-semibold">Dr. Emily Larson</h2>
-//     <p className="text-gray-600">Gynecologist</p>
-//     <p className="text-gray-600">
-//       Address: 27th Cross, Richmond Circle, Ring Road, London
-//     </p>
-//     <p className="text-gray-600">Date & Time: 27 Feb 2025 | 04:00 PM</p>
-//     {/* Buttons aligned to the right in a column */}
-//     <div className="mt-4 flex flex-col items-end space-y-2">
-//       <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">
-//         Pay Online
-//       </button>
-//       <button className="px-4 py-2 bg-red-500 text-white rounded-lg">
-//         Cancel Appointment
-//       </button>
-//     </div>
-//   </div>
-// </div>
-
-
-
-//         {/* Appointment 2 */}
-//         <div className="p-4 border rounded-lg flex items-start space-x-4">
-//           {/* Image Placeholder */}
-//           <div className="w-40 h-40 bg-gray-200 rounded-lg flex items-center justify-center">
-//             <span className="text-gray-500">Image</span>
-//           </div>
-
-//           {/* Appointment Details */}
-//           <div className="flex-1 flex flex-col">
-//             <h2 className="text-xl font-semibold">Dr. Jennifer Garcia</h2>
-//             <p className="text-gray-600">Neurologist</p>
-//             <p className="text-gray-600">Address: 37th Cross, Richmond Circle, Ring Road, London</p>
-//             <p className="text-gray-600">Date & Time: 26 Feb 2025 | 11:00 AM</p>
-//             {/* Buttons aligned to the right in a column */}
-//             <div className="mt-4 flex flex-col items-end space-y-2">
-//               <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Pay Online</button>
-//               <button className="px-4 py-2 bg-red-500 text-white rounded-lg">Cancel Appointment</button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ContactUs;

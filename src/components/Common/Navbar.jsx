@@ -61,7 +61,7 @@ const Navbar = () => {
             <hr className=" absolute top-7 w-full border-2 transition-all duration-700 ease-in-out opacity-0" />
           </NavLink>
 
-          <NavLink to={"/contact-Us"} className="relative text-white">
+          <NavLink to={"/contact-us"} className="relative text-white">
             Contact Us
             <hr className="absolute top-7  w-full border-2 transition-all duration-700 ease-in-out opacity-0" />
           </NavLink>
@@ -97,7 +97,7 @@ const Navbar = () => {
               About
             </NavLink>
             <NavLink
-              to={"/contact-Us"}
+              to={"/contact-us"}
               className="text-white text-lg py-2"
               onClick={() => setMenuOpen(false)}
             >

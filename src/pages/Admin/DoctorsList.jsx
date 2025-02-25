@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar_admin from '../../components/Admin,Doctor,Pharmacy/Navbar_admin'
 import Sidebar from '../../components/Admin,Doctor,Pharmacy/Sidebar'
 import DoctorCard from '../../components/Common/DoctorCard'
+import { AdminMenuItems } from "../../Constants/constants";
 
 //assets
 
@@ -46,10 +47,10 @@ const DoctorsList = () => {
     ];
   return (
     <div className="flex flex-col h-screen">
-    <Navbar_admin /> {/* Navbar on top */}
+    <Navbar_admin department={"Admin"} /> {/* Navbar on top */}
     <div className="flex flex-1">
       <div className="flex-shrink-0">
-        <Sidebar /> {/* Sidebar on the left */}
+        <Sidebar  menuItems={AdminMenuItems}/> {/* Sidebar on the left */}
       </div>
       <div className="flex-1 p-4 bg-gray-50">
         {/* Main content goes here */}
