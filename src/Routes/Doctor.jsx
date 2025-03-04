@@ -9,7 +9,7 @@ const Doctor = () => {
   return (
     <div>
           <Routes>
-        <Route path="/doctor-home" element={<DoctorDashboard/>} />
+        <Route path="/" element={<DoctorDashboard/>} />
         <Route path="/appointments-in-doctor" element={<DoctorAppointments/>} />
         <Route path="/doctor-profile" element={<DoctorProfile/>} />
         <Route path="/doctor-chat" element={<DoctorChat/>} />

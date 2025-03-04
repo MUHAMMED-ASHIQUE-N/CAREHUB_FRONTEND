@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import LoginPoster from './LoginPoster'
-import { data, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import axios from "axios";
-
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 const SingIn = () => {
 
-    const navigate = useNavigate()
-    const [error, setError] = useState("");
+  const {login} = useContext(AuthContext);
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate()
 
-  const onSubmit = async (data) => {
-    try{
-await axios.post("http://localhost:7070/api/user/login", data);
-navigate('/')
-    }catch (err){
-      console.error(err);
-      setError(err.response?.dat?.message || "login failed")
-    }
-  }
+
+const { register, handleSubmit, formState: { errors } } = useForm();
+
+const onSubmit = async (data) => {
+ try {
+   await login(data.email, data.password);
+ } catch (error) {
+  console.log(error);
+ } 
+}
   return (
     <div>
        <div className='flex justify-center items-center h-[90vh] mt-[4.5rem] mx-auto xl:w-[85%] '>
@@ -29,7 +29,6 @@ navigate('/')
             
               <div className="md:w-3/5 flex flex-col justify-center items-center border  border-gray-500  rounded-r-md md:rounded-l-0 md:rounded-r-md p-8 shadow-2xl">
                   <h2 className="text-2xl font-semibold mb-6">Login Account</h2>
-                  {error && <p style={{ color: "red" }}>{error}</p>}
                   <form onSubmit={handleSubmit(onSubmit)} className=" w-full md:max-w-[400px] ">
             <div>
                 <div className="grid grid-cols-1  gap-4">

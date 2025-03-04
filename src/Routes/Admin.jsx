@@ -12,7 +12,7 @@ const Admin = () => {
     <div>
       
       <Routes>
-        <Route path="/admin-home" element={<Dashboard/>} />
+        <Route path="/" element={<Dashboard/>} />
         <Route path="/appointments_in_admin" element={<Appointments/>} />
         <Route path="/add_Doctors" element={<AddDoctors/>} />
         <Route path="/doctorsList" element={<DoctorsList/>} />

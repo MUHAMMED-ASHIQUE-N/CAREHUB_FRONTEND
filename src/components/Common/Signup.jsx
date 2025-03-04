@@ -17,7 +17,9 @@ function Signup() {
 
   const onSubmit = async (data) => {
     try {
-       await axios.post(`http://localhost:7070/api/user/Register`, data);  
+      const userData = {...data, role: "patient"};
+
+       await axios.post(`http://localhost:7070/api/user/register`, userData,);  
    
       navigate('/login')
            
