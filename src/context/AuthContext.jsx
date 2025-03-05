@@ -21,17 +21,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false); // Set loading to false after checking
   }, []);
 
-  const login = async (email, password) => {
-    try {
-      const res = await api.post("user/login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      setUser(res.data.user);
-      navigate(getRedirectPath(res.data.user.role));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -40,20 +30,36 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
+
+  const login = async (email, password) => {
+    try {
+      const res = await api.post("user/login", { email, password });
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setUser(res.data.user);
+      
+      const redirectPath = getRedirectPath(res.data.user.role);
+      navigate(redirectPath, { replace: true }); // Ensure redirection is correct
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
   const getRedirectPath = (role) => {
     switch (role) {
       case "admin":
-        return "/admin"; // Updated to new route
+        return "/admin";
       case "doctor":
         return "/doctor";
       case "pharmacy":
         return "/pharmacy";
       case "patient":
-        return "/";
+        return "/patient";
       default:
         return "/";
     }
   };
+  
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>

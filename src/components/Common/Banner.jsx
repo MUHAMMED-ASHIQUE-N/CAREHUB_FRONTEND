@@ -1,24 +1,35 @@
-import React from 'react'
+import{ React, useContext } from 'react'
 
 import appointment_img from '../../assets/assets_frontend/appointment_img.png'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 const Banner = () => {
 
 const navigate =  useNavigate()
+
+    const { user } = useContext(AuthContext);
+    const onClickNavigate = () => {
+      if (user) {
+     navigate("/contact-us")
+      } else {
+        navigate(`/login`);
+      }
+    };
+
   return (
     <div className='flex bg-primaryColor  md:rounded-lg px-6 sm:px-10 md:px-14 lg:px-12 my-20 md:mx-10'>
       <div className='flex-1 py-8 sm:py-10 md:py16 lg:py-24 lg:pl-5'>
-        <div className='text-xl sm:text-2xl md:text-2xl lg:text-5xl font-semibold text-white'>
+        <div className='text-xl sm:text-2xl md:text-2xl lg:text-xl font-semibold text-white'>
             <p>Book Appointment</p>
             <p className='mt-4'>With 100+ Trusted Doctors</p>
         </div>
-        <button onClick={() => navigate("/login") }
+        <button onClick={onClickNavigate}
             className="relative mt-6 overflow-hidden bg-white text-black py-3 px-8 rounded-full font-roboto transition-all duration-500 
   before:absolute before:inset-0 before:bg-buttonColor before:scale-x-0 before:origin-center 
   hover:before:scale-x-100 hover:text-white font-semibold tracking-wide before:transition-transform before:duration-500 
    before:z-0 z-10"
           >
-            <span className="relative z-10">Create account</span>
+            <span className="relative z-10"> { user ? "Contact Us" : " Create account"}</span>
           </button>
       </div>
 

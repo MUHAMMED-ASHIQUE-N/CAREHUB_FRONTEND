@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 // assets
@@ -14,6 +14,9 @@ const Navbar = () => {
   const [dropDown, setDropDown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isPatient = user?.role === "patient";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +29,7 @@ const Navbar = () => {
   return (
     <nav
       className={`${
-        isScrolled || location.pathname !== "/"
+        isScrolled || (location.pathname !== "/"  && location.pathname !== "/patient" ) 
           ? "bg-primaryColor"
           : "bg-transparent"
       } fixed top-0 w-full transition-all duration-300 z-50 py-4 text-white`}
@@ -49,30 +52,15 @@ const Navbar = () => {
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center space-x-7 font-dmSans">
-          <NavLink to="/" className="relative text-white">Home</NavLink>
+          <NavLink to={ isPatient? "/patient" : "/" }className="relative text-white">Home</NavLink>
           <NavLink to="/doctors" className="relative text-white">Doctors</NavLink>
           <NavLink to="/about" className="relative text-white">About</NavLink>
           <NavLink to="/contact-us" className="relative text-white">Contact Us</NavLink>
         </div>
 
-        {/* Mobile Nav Menu */}
-        <div
-          className={`absolute top-16 left-0 w-full bg-primaryColor transition-all duration-500 ${
-            menuOpen ? "opacity-100 h-auto py-5" : "opacity-0 h-0 overflow-hidden"
-          }`}
-        >
-          <div className="flex flex-col space-y-4 text-center font-dmSans">
-            <NavLink to="/" className="text-white text-lg py-2" onClick={() => setMenuOpen(false)}>Home</NavLink>
-            <NavLink to="/doctors" className="text-white text-lg py-2" onClick={() => setMenuOpen(false)}>Doctors</NavLink>
-            <NavLink to="/about" className="text-white text-lg py-2" onClick={() => setMenuOpen(false)}>About</NavLink>
-            <NavLink to="/contact-us" className="text-white text-lg py-2" onClick={() => setMenuOpen(false)}>Contact Us</NavLink>
-          </div>
-        </div>
-
         {/* Authentication Section */}
         <div className="flex items-center space-x-7">
-          {user ? (
-            // If logged in, show profile and logout button
+          {isPatient ?  (
             <div className="flex items-center relative">
               <img src={profile_pic} alt="Profile" className="w-8 rounded-full cursor-pointer" onClick={() => setDropDown(!dropDown)} />
               <img src={dropdown_icon} alt="Dropdown" onClick={() => setDropDown(!dropDown)} />
@@ -88,7 +76,6 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            // If not logged in, show "Create Account" button
             <button
               onClick={() => navigate("/login")}
               className="md:flex items-center gap-1 py-2 bg-buttonColor px-5 rounded-full font-dmSans"

@@ -170,7 +170,7 @@ const navigate = useNavigate()
         </div>
       </div>
       {/* //Doctoe cards */}
-      <div className="mx-auto lg:w-[85%]  w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5  gap-4 py-10">
+      <div className="mx-auto lg:w-[85%]  w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5  gap-4 py-10">
         {DoctorsData.slice(0, 10).map((val, index) => (
           <div key={index}>
   <DoctorCard

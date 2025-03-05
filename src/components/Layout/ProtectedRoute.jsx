@@ -6,7 +6,7 @@ const ProtectedRoute = ({ role }) => {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) {
-    return <div>Loading...</div>; // Show loading spinner or nothing
+    return <div>Loading...</div>; // Show loading state
   }
 
   if (!user) {
@@ -17,7 +17,7 @@ const ProtectedRoute = ({ role }) => {
     return <Navigate to="/not-found" replace />;
   }
 
-  return <Outlet />;
+  return <Outlet />; // Render child components
 };
 
 export default ProtectedRoute;
