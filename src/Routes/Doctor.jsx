@@ -2,17 +2,17 @@ import React from 'react'
 import { Routes,Route } from 'react-router-dom'
 import DoctorChat from '../pages/Doctor/DoctorChat'
 import DoctorAppointments from '../pages/Doctor/DoctorAppointments'
-import DoctorProfile from '../pages/Doctor/DoctorProfile'
 import DoctorDashboard from '../pages/Doctor/DoctorDashboard'
-
+import DoctorProfile from '../pages/Doctor/DoctorProfile'
 const Doctor = () => {
   return (
     <div>
           <Routes>
         <Route path="/" element={<DoctorDashboard/>} />
-        <Route path="/appointments-in-doctor" element={<DoctorAppointments/>} />
-        <Route path="/doctor-profile" element={<DoctorProfile/>} />
-        <Route path="/doctor-chat" element={<DoctorChat/>} />
+        <Route path="appointments" element={<DoctorAppointments/>} />
+        <Route path="chat" element={<DoctorChat/>} />
+        <Route path="profile" element={<DoctorProfile/>} />
+
      
       </Routes>
     </div>

@@ -12,6 +12,7 @@ import Patients_icon from "../../assets/assets_admin/patients_icon.svg";
 import list_icon from "../../assets/assets_admin/list_icon.svg";
 import patient_image from "../../assets/assets_frontend/doc1.png";
 import cancel_icon from "../../assets/assets_admin/cancel_icon.svg";
+import { Outlet } from "react-router-dom";
 
 const appointments = Array(20).fill({
   name: "Richard James",
@@ -91,6 +92,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Outlet/>
     </div>
   );
 };

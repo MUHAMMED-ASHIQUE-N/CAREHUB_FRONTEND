@@ -3,14 +3,19 @@ import { useForm, Controller } from "react-hook-form";
 import Navbar_admin from "../../components/Admin,Doctor,Pharmacy/Navbar_admin";
 import Sidebar from "../../components/Admin,Doctor,Pharmacy/Sidebar";
 import upload_Icon from "../../assets/assets_admin/upload_area.svg";
-
+import { useDispatch, useSelector } from "react-redux";
 import { AdminMenuItems } from "../../Constants/constants";
-
+import { Outlet } from "react-router-dom";
+import { addDoctor,resetDoctorState } from "../../Redux/addDoctor/AddDoctorslice";
 const AddDoctors = () => {
+
+  const dispatch = useDispatch();
+  const {doctor, loading, error} = useSelector((state) => state.addDoctor);
+
   const fileInputRef = useRef(null);
-  const [doctorsData, setDoctorsData] = useState(null);
   const [previewImage, setPreviewImage] = useState(null); // State for image preview
   const { register, handleSubmit, control, formState: { errors } } = useForm();
+
 
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -26,11 +31,13 @@ const AddDoctors = () => {
   };
 
   const onSubmit = (data) => {
-    // Update doctorsData state with the form data
-    setDoctorsData(data);
-    console.log("Form Data:", data);
-    // You can also send this data to an API or perform other actions here
+    const formData = {
+      ...data,
+      doctorPicture: previewImage, // Send image preview URL (change if using API upload)
+    };
+    dispatch(addDoctor(formData));
   };
+
 
   return (
     <div className="flex flex-col h-screen">
@@ -42,6 +49,10 @@ const AddDoctors = () => {
         <div className="flex-1 w-full p-3 md:p-0  bg-gray-100">
           <div className="md:p-6 bg-gray-100 w-full overflow-y-auto h-[89vh] scrollbar-hide ">
             <h1 className="text-2xl font-bold mb-6">Add Doctor</h1>
+            <h1>Add Doctor</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p className="text-red-500">{error}</p>}
+      {doctor && <p className="text-green-500">Doctor added successfully!</p>}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="bg-white p-6  md:max-w-6xl mx-auto  rounded-lg shadow-md">
                 <div className="mb-6">
@@ -66,7 +77,7 @@ const AddDoctors = () => {
                       )}
                     </div>
                     <Controller
-                      name="doctorPicture"
+                      name="image"
                       control={control}
                       defaultValue=""
                       render={({ field }) => (
@@ -98,7 +109,7 @@ const AddDoctors = () => {
                       type="text"
                       className="w-full p-2 border rounded mt-2"
                       placeholder="Name"
-                      {...register("doctorName", { required: "Doctor name is required" })}
+                      {...register("name", { required: "Doctor name is required" })}
                     />
                     {errors.doctorName && (
                       <p className="text-red-500 text-sm mt-1">{errors.doctorName.message}</p>
@@ -198,7 +209,7 @@ const AddDoctors = () => {
                     className="w-full p-2 border rounded mt-2"
                     rows="4"
                     placeholder="About Doctor"
-                    {...register("aboutDoctor", { required: "About Doctor is required" })}
+                    {...register("about", { required: "About Doctor is required" })}
                   ></textarea>
                   {errors.aboutDoctor && (
                     <p className="text-red-500 text-sm mt-1">{errors.aboutDoctor.message}</p>
@@ -216,7 +227,9 @@ const AddDoctors = () => {
           </div>
         </div>
       </div>
+      <Outlet/>
     </div>
+
   );
 };
 

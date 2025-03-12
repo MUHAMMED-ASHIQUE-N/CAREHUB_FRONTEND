@@ -13,8 +13,8 @@ const DoctorProfile = () => {
       </div>
       <div className="flex-1 p-4 bg-gray-50">
         {/* Main content goes here */}
-        <h1 className='font-semibold text-lg'> All Doctors</h1>
-        djk
+        <h1 className='font-semibold text-lg'> All Docts</h1>
+        
         {/* Add more content to make the sidebar height adjust */}
       </div>
     </div>        

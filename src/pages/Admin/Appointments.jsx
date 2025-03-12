@@ -4,6 +4,7 @@ import Sidebar from '../../components/Admin,Doctor,Pharmacy/Sidebar'
 import patient_image from "../../assets/assets_frontend/doc1.png"
 import cancel_icon from "../../assets/assets_admin/cancel_icon.svg"
 import { AdminMenuItems } from "../../Constants/constants";
+import { Outlet } from 'react-router-dom'
 
 
 const Appointments = () => {
@@ -114,6 +115,7 @@ const Appointments = () => {
         {/* Add more content to make the sidebar height adjust */}
       </div>
     </div>
+    <Outlet/>
   </div>
   )
 }

@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 const DoctorCard = ({ id, name, speciality, image }) => {
   const { user } = useContext(AuthContext);
   const onClickNavigate = () => {
-    if (user?.role === "patient") {
+    if (user?.role === "patient" ) {
       navigate(`/doctor-profile/${id}`);
     } else {
       navigate(`/login`);

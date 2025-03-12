@@ -3,19 +3,14 @@ import appointment_icon from "../assets/assets_admin/appointment_icon.svg";
 import add_icon from "../assets/assets_admin/add_icon.svg";
 import people_icon from "../assets/assets_admin/people_icon.svg";
 
-export const AdminPATHS = {
-  HOME: "/admin-home",
-  APPOINTMENTS: "/appointments_in_admin",
-  ADD_DOCTORS: "/add_Doctors",
-  DOCTORS_LIST: "/doctorsList",
-  CHAT: "/admin-chat",
-};
 
-export const DoctorPATHS = {
-  HOME: "/doctor-home",
-  APPOINTMENTS: "/appointments-in-doctor",
-  DOCTOR_CHAT: "/doctor-chat",
-  DOCTORS_PROFILE: "/doctor-profile",
+
+
+export const AdminPATHS = {
+  HOME: "/admin",
+  APPOINTMENTS: "/admin/appointments",
+  ADD_DOCTORS: "/admin/add-doctors",
+  DOCTORS_LIST: "/admin/doctors-list",
 };
 
 export const AdminMenuItems = [
@@ -39,12 +34,16 @@ export const AdminMenuItems = [
     icon: people_icon,
     label: "Doctors List",
   },
-  {
-    path: AdminPATHS.CHAT,
-    icon: people_icon,
-    label: "Messages",
-  },
+
 ];
+
+
+export const DoctorPATHS = {
+  HOME: "/doctor",
+  APPOINTMENTS: "/doctor/appointments",
+  DOCTOR_CHAT: "/doctor/chat",
+  DOCTOR_PROFILE: "/doctor/profile",
+};
 
 export const DoctorMenuItems = [
   {

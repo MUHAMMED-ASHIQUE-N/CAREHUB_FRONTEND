@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 const Sidebar = ({ menuItems }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -13,17 +12,17 @@ const Sidebar = ({ menuItems }) => {
 
   const handleItemClick = (path) => {
     setActiveItem(path);
-    navigate(path);
+    navigate(path); // Navigate correctly
   };
 
-  const isActive = (path) => activeItem === path;
+  const isActive = (path) => location.pathname === path;
 
   return (
     <div className="w-16 md:w-52 flex justify-center h-auto">
       <div className="mt-5 w-full flex flex-col items-center gap-7 text-black">
-        {menuItems.map((item) => (
+        {menuItems.map((item,index) => (
           <button
-            key={item.path}
+            key={index}
             onClick={() => handleItemClick(item.path)}
             className={`w-full cursor-pointer p-3 flex justify-center ${
               isActive(item.path)
@@ -32,11 +31,7 @@ const Sidebar = ({ menuItems }) => {
             }`}
           >
             <div className="md:w-[80%] flex gap-5 items-center">
-              <img
-                src={item.icon}
-                alt={`${item.label} icon`}
-                className="w-6 h-6"
-              />
+              <img src={item.icon} alt={`${item.label} icon`} className="w-6 h-6" />
               <p className="hidden md:block mt-1">{item.label}</p>
             </div>
           </button>

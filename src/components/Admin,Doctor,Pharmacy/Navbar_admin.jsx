@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 
 const Navbar_admin = ({department}) => {
+  const {  logout } = useContext(AuthContext);
+
   return (
     <div className='bg-white border-b w-full py-2 md:py-4'>
       <div className='flex justify-between  ' >
@@ -13,7 +16,7 @@ const Navbar_admin = ({department}) => {
 
         </div>
         <div className='pr-5 md:pr-20' >   
-            <button className='mt-2 text-sm md:text-base py-2 px-7 md:px-12 bg-buttonColor rounded-full text-white font-semibold '>Logout</button>
+            <button onClick={logout} className='mt-2 text-sm md:text-base py-2 px-7 md:px-12 bg-buttonColor rounded-full text-white font-semibold '>Logout</button>
         </div>
       </div>
     </div>

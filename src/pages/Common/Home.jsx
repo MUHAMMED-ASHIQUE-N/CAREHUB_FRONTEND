@@ -47,10 +47,11 @@ const Home = () => {
 const navigate = useNavigate()
 
   return (
+    
     <div className=" ">
       <div className='relative bg-[url("./assets/assets_frontend/banner-1.jpg")] bg-cover  h-[70vh] xl:h-[90vh]'>
         <div className="absolute inset-0">
-          <Navbar />
+        <Navbar />
         </div>
         <div className="h-full flex items-center ">
           <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -115,7 +116,6 @@ const navigate = useNavigate()
           />
 
           <div className="text-5xl text-primaryColor hidden md:block animate-pulse">
-            ........
           </div>
 
           <Features
@@ -131,11 +131,10 @@ const navigate = useNavigate()
           />
 
           <div className="text-5xl text-primaryColor hidden md:block animate-pulse">
-            ........
           </div>
 
           <Features
-            image={stethoscope}
+            image={3}
             heading="Medical Treatment"
             paragraph={
               <>
@@ -159,9 +158,7 @@ const navigate = useNavigate()
           />
           <div className="flex items-center justify-center flex-wrap gap-4">
             <Speciality
-              image={General_physician}
-              speciality="General physician"
-            />
+              image={General_physician} speciality="General physician"/>
             <Speciality image={Dermatologist} speciality="Dermatologist" />
             <Speciality image={Neurologist} speciality="Neurologist" />
             <Speciality image={Dermatologist} speciality="Dermatologist" />

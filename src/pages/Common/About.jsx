@@ -7,6 +7,7 @@ import ServiceCard from '../../components/Common/ServiceCard'
 const About = () => {
   return (
     <div>
+      
       <div>
         <Navbar/>
       </div>
