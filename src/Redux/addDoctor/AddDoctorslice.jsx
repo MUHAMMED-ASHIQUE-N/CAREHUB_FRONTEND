@@ -7,7 +7,7 @@ export const addDoctor = createAsyncThunk(
       try {
         const response = await api.post("/doctor/addDoctor/", doctorData);
         return response.data; // ✅ Fix: Axios handles JSON response automatically
-        console.log(response?.data);
+       
         
       } catch (err) {
         return thunkAPI.rejectWithValue({ error: err.response?.data?.message || err.message });

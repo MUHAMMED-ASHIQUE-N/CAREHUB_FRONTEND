@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setSearchQuery,
   setSelectedSpecialty,
   toggleSpecialtyFilter,
+  getDoctors,
 } from "../../Redux/DoctotFilter/doctorsSlice";
 
 //assets
@@ -21,7 +22,13 @@ const Doctors = () => {
     filteredDoctors,
     selectedSpecialty,
     showSpecialtyFilter,
+    loading,
+    error,
   } = useSelector((state) => state.doctors);
+
+  useEffect(() => {
+    dispatch(getDoctors()); // Fetch doctors on component mount
+  }, [dispatch]);
 
   const specialties = [
     "all",
@@ -43,7 +50,7 @@ const Doctors = () => {
             />
             <img
               src={search_icon}
-              alt=""
+              alt="Search Icon"
               className="absolute w-5 h-5 right-5 top-3"
             />
           </div>
@@ -79,32 +86,39 @@ const Doctors = () => {
           </div>
         </div>
 
-        {selectedSpecialty !== "all" && (
-          <div className="text-center mb-6">
-            <span className="bg-primaryColor text-white px-4 py-1 rounded-full text-sm">
-              Showing: {selectedSpecialty}
-              <button
-                onClick={() => dispatch(setSelectedSpecialty("all"))}
-                className="ml-2 text-white hover:text-gray-200"
-              >
-                ×
-              </button>
-            </span>
-          </div>
-        )}
+        {loading ? (
+          <p className="text-center">Loading doctors...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">Error: {error}</p>
+        ) : (
+          <>
+            {selectedSpecialty !== "all" && (
+              <div className="text-center mb-6">
+                <span className="bg-primaryColor text-white px-4 py-1 rounded-full text-sm">
+                  Showing: {selectedSpecialty}
+                  <button
+                    onClick={() => dispatch(setSelectedSpecialty("all"))}
+                    className="ml-2 text-white hover:text-gray-200"
+                  >
+                    ×
+                  </button>
+                </span>
+              </div>
+            )}
 
-        <div className="mx-auto lg:w-[85%] w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-10">
-          {filteredDoctors.map((val) => (
-            <div key={`${val._id}-${filteredDoctors.length}`}>
-              <DoctorCard
-                id={val._id}
-                image={val.image}
-                name={val.name}
-                speciality={val.speciality}
-              />
+            <div className="mx-auto lg:w-[85%] w-[80%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-10">
+              {filteredDoctors.map((doctor) => (
+                <DoctorCard
+                  key={doctor._id}
+                  id={doctor._id}
+                  image={doctor.image}
+                  name={doctor.name}
+                  speciality={doctor.speciality}
+                />
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
 
         <Banner />
       </div>

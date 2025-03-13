@@ -5,13 +5,13 @@ import { AuthContext } from "../../context/AuthContext";
 
 const DoctorCard = ({ id, name, speciality, image }) => {
   const { user } = useContext(AuthContext);
-  const onClickNavigate = () => {
-    if (user?.role === "patient" ) {
-      navigate(`/doctor-profile/${id}`);
-    } else {
-      navigate(`/login`);
-    }
-  };
+  // const onClickNavigate = () => {
+  //   if (user?.role === "patient" ) {
+  //     navigate(`/doctor-profile/${id}`);
+  //   } else {
+  //     navigate(`/login`);
+  //   }
+  // };
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -21,7 +21,7 @@ const DoctorCard = ({ id, name, speciality, image }) => {
 
   return (
     <div
-      onClick={onClickNavigate}
+      // onClick={onClickNavigate}
       ref={ref}
       className={`flex flex-col  gap-4  bg-white  rounded-lg shadow-lg border border-gray-100 cursor-pointer  transform duration-1000  ease-out delay-100 transition-all   ${
         inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-32"

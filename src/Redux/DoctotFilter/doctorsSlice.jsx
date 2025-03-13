@@ -1,17 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { DoctorsData } from "../../Constants/DoctorsData";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import api from "../../utils/api";
 
-const initialState = {
-  doctors: DoctorsData,
-  filteredDoctors: DoctorsData,
-  searchQuery: "",
-  selectedSpecialty: "all",
-  showSpecialtyFilter: false,
-};
+export const getDoctors = createAsyncThunk(
+  "doctors/fetchAll",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("doctor/getDoctor/");
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);
 
 const doctorsSlice = createSlice({
   name: "doctors",
-  initialState,
+  initialState: {
+    doctors: [],
+    filteredDoctors: [],
+    searchQuery: "",
+    selectedSpecialty: "all",
+    showSpecialtyFilter: false,
+    loading: false,
+    error: null,
+  },
   reducers: {
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
@@ -29,7 +41,7 @@ const doctorsSlice = createSlice({
     },
 
     applyFilters: (state) => {
-      let filtered = DoctorsData;
+      let filtered = state.doctors; // Use API-fetched doctors
 
       if (state.selectedSpecialty !== "all") {
         filtered = filtered.filter(
@@ -49,6 +61,22 @@ const doctorsSlice = createSlice({
 
       state.filteredDoctors = filtered;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getDoctors.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getDoctors.fulfilled, (state, action) => {
+        state.loading = false;
+        state.doctors = action.payload;
+        doctorsSlice.caseReducers.applyFilters(state);
+      })
+      .addCase(getDoctors.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
