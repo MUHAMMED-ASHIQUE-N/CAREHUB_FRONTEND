@@ -29,7 +29,7 @@ const onSubmit = async (data) => {
       <div className='mx-auto w-[90%] md:w-[95%] xl:w-[85%]'>
          <div className='flex justify-center items-center h-[89vh] mt-[4.5rem] mx-auto xl:w-[85%] '>
               <div className="flex flex-col md:flex-row  w-full">
-      
+
                   <LoginPoster />
       
                 <div className="md:w-3/5 flex flex-col justify-center items-center border  border-gray-500  rounded-r-md md:rounded-l-0 md:rounded-r-md p-8 shadow-2xl">
