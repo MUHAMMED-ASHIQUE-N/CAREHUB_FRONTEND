@@ -4,6 +4,7 @@ import Appointments from "../pages/Admin/Appointments";
 import AddDoctors from "../pages/Admin/AddDoctors";
 import DoctorsList from "../pages/Admin/DoctorsList";
 import Dashboard from "../pages/Admin/Dashboard";
+import DoctorDetails from "../pages/Admin/DoctorDetails";
 
 const AdminLayout = () => {
   return (
@@ -21,6 +22,7 @@ const Admin = () => {
         <Route path="appointments" element={<Appointments />} />
         <Route path="add-doctors" element={<AddDoctors />} />
         <Route path="doctors-list" element={<DoctorsList />} />
+        <Route path="/doctor/:id" element={<DoctorDetails />} />
       </Route>
     </Routes>
   );

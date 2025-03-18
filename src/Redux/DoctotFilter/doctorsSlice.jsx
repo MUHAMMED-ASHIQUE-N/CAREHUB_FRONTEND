@@ -27,39 +27,17 @@ const doctorsSlice = createSlice({
   reducers: {
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
-      doctorsSlice.caseReducers.applyFilters(state);
+      applyFilters(state); // ✅ Correct way to apply filters
     },
 
     setSelectedSpecialty: (state, action) => {
       state.selectedSpecialty = action.payload;
       state.showSpecialtyFilter = false;
-      doctorsSlice.caseReducers.applyFilters(state);
+      applyFilters(state); // ✅ Correct way to apply filters
     },
 
     toggleSpecialtyFilter: (state) => {
       state.showSpecialtyFilter = !state.showSpecialtyFilter;
-    },
-
-    applyFilters: (state) => {
-      let filtered = state.doctors; // Use API-fetched doctors
-
-      if (state.selectedSpecialty !== "all") {
-        filtered = filtered.filter(
-          (doctor) =>
-            doctor.speciality.toLowerCase() === state.selectedSpecialty.toLowerCase()
-        );
-      }
-
-      if (state.searchQuery) {
-        const lowerCaseSearch = state.searchQuery.toLowerCase();
-        filtered = filtered.filter(
-          (doctor) =>
-            doctor.name.toLowerCase().includes(lowerCaseSearch) ||
-            doctor.speciality.toLowerCase().includes(lowerCaseSearch)
-        );
-      }
-
-      state.filteredDoctors = filtered;
     },
   },
   extraReducers: (builder) => {
@@ -71,7 +49,7 @@ const doctorsSlice = createSlice({
       .addCase(getDoctors.fulfilled, (state, action) => {
         state.loading = false;
         state.doctors = action.payload;
-        doctorsSlice.caseReducers.applyFilters(state);
+        applyFilters(state); // ✅ Correct way to apply filters
       })
       .addCase(getDoctors.rejected, (state, action) => {
         state.loading = false;
@@ -80,10 +58,30 @@ const doctorsSlice = createSlice({
   },
 });
 
-export const {
-  setSearchQuery,
-  setSelectedSpecialty,
-  toggleSpecialtyFilter,
-} = doctorsSlice.actions;
+// ✅ Move applyFilters outside of `reducers` and `extraReducers`
+const applyFilters = (state) => {
+  let filtered = state.doctors; // Use API-fetched doctors
+
+  if (state.selectedSpecialty !== "all") {
+    filtered = filtered.filter(
+      (doctor) =>
+        doctor.speciality.toLowerCase() === state.selectedSpecialty.toLowerCase()
+    );
+  }
+
+  if (state.searchQuery) {
+    const lowerCaseSearch = state.searchQuery.toLowerCase();
+    filtered = filtered.filter(
+      (doctor) =>
+        doctor.name.toLowerCase().includes(lowerCaseSearch) ||
+        doctor.speciality.toLowerCase().includes(lowerCaseSearch)
+    );
+  }
+
+  state.filteredDoctors = filtered;
+};
+
+export const { setSearchQuery, setSelectedSpecialty, toggleSpecialtyFilter } =
+  doctorsSlice.actions;
 
 export default doctorsSlice.reducer;

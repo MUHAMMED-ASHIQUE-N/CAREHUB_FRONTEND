@@ -67,3 +67,6 @@ export const DoctorMenuItems = [
     label: "Profile",
   },
 ];
+
+
+export const DOCTOR_IMAGE_URL = "http://localhost:7070/api/doctor/getDoctor/"
