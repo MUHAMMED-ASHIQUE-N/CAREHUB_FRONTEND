@@ -6,6 +6,7 @@
     toggleSpecialtyFilter,
     getDoctors,
   } from "../../Redux/DoctotFilter/doctorsSlice";
+  import { DOCTOR_IMAGE_URL } from "../../Constants/constants";
 
   //assets
   import search_icon from "../../assets/assets_frontend/search_icon.svg";
@@ -111,7 +112,7 @@
                   <DoctorCard
                     key={doctor._id}
                     id={doctor._id}
-                    image={`http://localhost:7070/${doctor.image}`}
+                    image={DOCTOR_IMAGE_URL+doctor.image}
                     name={doctor.name}
                     speciality={doctor.speciality}
                   />

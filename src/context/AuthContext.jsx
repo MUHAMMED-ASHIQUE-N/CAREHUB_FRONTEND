@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,10 +18,8 @@ export const AuthProvider = ({ children }) => {
     } else {
       logout();
     }
-    setLoading(false); // Set loading to false after checking
+    setLoading(false);
   }, []);
-
-
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -30,21 +28,22 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
-
   const login = async (email, password) => {
     try {
       const res = await api.post("user/login", { email, password });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      setUser(res.data.user);
-      
-      const redirectPath = getRedirectPath(res.data.user.role);
-      navigate(redirectPath, { replace: true }); // Ensure redirection is correct
+      const token = res.data.token || res.data.adminToken || res.data.phamacyToken;
+      const user = res.data.user || { role: res.data.role }  // Ensure `user` is always an object
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+
+      navigate(getRedirectPath(user.role), { replace: true });
     } catch (err) {
       console.error(err);
     }
   };
-  
+
   const getRedirectPath = (role) => {
     switch (role) {
       case "admin":
@@ -59,7 +58,6 @@ export const AuthProvider = ({ children }) => {
         return "/";
     }
   };
-  
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>

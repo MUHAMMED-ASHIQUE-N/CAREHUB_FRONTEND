@@ -13,16 +13,18 @@ import {
   Save
 } from "lucide-react";
 import { useLocation, useParams } from "react-router-dom";
+import {  useSelector } from "react-redux";
 const DoctorDetails = () => {
+  const [doctorData , setDoctorData] = useState(null)
 
-  const { state} = useLocation();
+
   const  {id} = useParams();
-  // const { name, specialty, _id } = state.doctor;
-  const doctor = state?.doctors?.find((doc) => doc._id === id)
-console.log(doctor);
+
+  const {doctors} = useSelector((state) => state.doctors)
 
   
 
+  
   const [isEditing, setIsEditing] = useState(false);
   const { register, handleSubmit,} = useForm({
   });
