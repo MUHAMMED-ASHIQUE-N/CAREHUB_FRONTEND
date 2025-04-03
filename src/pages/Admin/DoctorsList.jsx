@@ -115,6 +115,7 @@
                     image={DOCTOR_IMAGE_URL+doctor.image}
                     name={doctor.name}
                     speciality={doctor.speciality}
+
                   />
                 ))}
               </div>

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { 
   User, 
   Mail, 
@@ -9,35 +8,27 @@ import {
   DollarSign, 
   Lock, 
   ChevronLeft,
-  Edit3,
-  Save
+  Edit3
 } from "lucide-react";
-import { useLocation, useParams } from "react-router-dom";
-import {  useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { DOCTOR_IMAGE_URL } from "../../Constants/constants";
+import { getDoctors } from "../../Redux/DoctotFilter/doctorsSlice";
+
 const DoctorDetails = () => {
-  const [doctorData , setDoctorData] = useState(null)
+  const [doctorData, setDoctorData] = useState(null);
+  const { id } = useParams();
+  const { doctors } = useSelector((state) => state.doctors);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const doctor = doctors.find((doctor) => doctor._id === id);
+    setDoctorData(doctor);
+  }, [id, doctors]);
 
-
-  const  {id} = useParams();
-
-  const {doctors} = useSelector((state) => state.doctors)
-
-  
-
-  
-  const [isEditing, setIsEditing] = useState(false);
-  const { register, handleSubmit,} = useForm({
-  });
-
-  const onSubmit = (data) => {
-    console.log("Updated Data:", data);
-    setIsEditing(false);
-  };
-
-  const cancelEdit = () => {
-    setIsEditing(false);
-  };
-
+  useEffect(() => {
+    dispatch(getDoctors());  
+  }, [dispatch]); 
   return (
     <div className="max-w-3xl mx-auto my-10 bg-white rounded-2xl shadow-xl overflow-hidden">
       <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-white">
@@ -51,87 +42,67 @@ const DoctorDetails = () => {
         <div className="flex items-center gap-6">
           <div className="relative">
             <img
-              src="https://via.placeholder.com/150"
+              src={DOCTOR_IMAGE_URL + doctorData?.image || "Loding..."}
               alt="Doctor"
               className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg"
             />
           </div>
           <div>
-            {isEditing ? (
-              <input
-                {...register("name")}
-                className="text-2xl font-bold bg-white bg-opacity-10 border border-white border-opacity-30 rounded-lg p-2 w-full text-white"
-              />
-            ) : (
-              <h2 className="text-3xl font-bold">Dr. John Doe</h2>
-            )}
-            <p className="text-lg opacity-90 mt-1">Cardiologist</p>
+            <h2 className="text-3xl font-bold">{doctorData?.name || "Loding..."}</h2>
+            <p className="text-lg opacity-90 mt-1">{doctorData?.speciality || "Loding..."}</p>
           </div>
         </div>
       </div>
       <div className="p-8">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-gray-700 font-medium">
-                <Mail size={18} className="text-blue-500" /> Email
-              </label>
-              <input {...register("email")} className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing} />
-            </div>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-gray-700 font-medium">
-                <User size={18} className="text-blue-500" /> Speciality
-              </label>
-              <input {...register("speciality")} className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing} />
-            </div>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-gray-700 font-medium">
-                <Award size={18} className="text-blue-500" /> Degree
-              </label>
-              <input {...register("degree")} className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing} />
-            </div>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-gray-700 font-medium">
-                <Clock size={18} className="text-blue-500" /> Experience
-              </label>
-              <input {...register("experience")} className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing} />
-            </div>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-gray-700 font-medium">
-                <DollarSign size={18} className="text-blue-500" /> Consultation Fees
-              </label>
-              <input {...register("fees")} className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing} />
-            </div>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-gray-700 font-medium">
-                <Lock size={18} className="text-blue-500" /> Password
-              </label>
-              <input type="password" {...register("password")} className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing} />
-            </div>
-          </div>
-          <div className="space-y-2 col-span-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
             <label className="flex items-center gap-2 text-gray-700 font-medium">
-              <FileText size={18} className="text-blue-500" /> About
+              <Mail size={18} className="text-blue-500" /> Email
             </label>
-            <textarea {...register("about")} rows="4"  className="w-full p-3 border border-gray-300 rounded-lg" disabled={!isEditing}></textarea>
+            <input value={doctorData?.email || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled />
           </div>
-          <div className="pt-4 flex justify-end gap-4">
-            {isEditing ? (
-              <>
-                <button type="button" onClick={cancelEdit} className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg">
-                  Cancel
-                </button>
-                <button type="submit" className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg flex items-center gap-2">
-                  <Save size={18} /> Save Changes
-                </button>
-              </>
-            ) : (
-              <button type="button" onClick={() => setIsEditing(true)} className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg flex items-center gap-2">
-                <Edit3 size={18} /> Edit Profile
-              </button>
-            )}
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-gray-700 font-medium">
+              <User size={18} className="text-blue-500" /> Speciality
+            </label>
+            <input value={doctorData?.speciality || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled />
           </div>
-        </form>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-gray-700 font-medium">
+              <Award size={18} className="text-blue-500" /> Degree
+            </label>
+            <input value={doctorData?.degree || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled />
+          </div>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-gray-700 font-medium">
+              <Clock size={18} className="text-blue-500" /> Experience
+            </label>
+            <input value={doctorData?.experience || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled />
+          </div>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-gray-700 font-medium">
+              <DollarSign size={18} className="text-blue-500" /> Consultation Fees
+            </label>
+            <input value={doctorData?.fees || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled />
+          </div>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-gray-700 font-medium">
+              <Lock size={18} className="text-blue-500" /> Password
+            </label>
+            <input type="password" value={doctorData?.password || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled />
+          </div>
+        </div>
+        <div className="space-y-2 col-span-full">
+          <label className="flex items-center gap-2 text-gray-700 font-medium">
+            <FileText size={18} className="text-blue-500" /> About
+          </label>
+          <textarea rows="4" value={doctorData?.about || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled></textarea>
+        </div>
+        <div className="pt-4 flex justify-end">
+          <button onClick={() => navigate(`/admin/doctor-editing/${id}`)} className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg flex items-center gap-2">
+            <Edit3 size={18} /> Edit Profile
+          </button>
+        </div>
       </div>
     </div>
   );
