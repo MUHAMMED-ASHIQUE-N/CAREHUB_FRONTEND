@@ -1,12 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Navbar_admin from "../../components/Admin,Doctor,Pharmacy/Navbar_admin";
 import Sidebar from "../../components/Admin,Doctor,Pharmacy/Sidebar";
 import upload_Icon from "../../assets/assets_admin/upload_area.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { AdminMenuItems } from "../../Constants/constants";
-import { Outlet } from "react-router-dom";
-import { addDoctor, resetDoctorState } from "../../Redux/addDoctor/AddDoctorslice";
+import { AdminMenuItems, DOCTOR_IMAGE_URL } from "../../Constants/constants";
+import { Outlet, useParams } from "react-router-dom";
+import {
+  addDoctor,
+  resetDoctorState,
+} from "../../Redux/addDoctor/AddDoctorslice";
+import {
+  updateDoctor,
+  resetUpdateState,
+} from "../../Redux/Doctors/updateDoctor";
 
 const AddDoctors = () => {
   const dispatch = useDispatch();
@@ -14,6 +21,21 @@ const AddDoctors = () => {
   const [showStatus, setShowStatus] = useState(false);
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
+  const [doctorData, setDoctorData] = useState([]);
+
+  const { id } = useParams();
+  const { doctors } = useSelector((state) => state.doctors);
+
+  useEffect(() => {
+    const docToUpdate = doctors.find((doc) => doc._id === id);
+    if (docToUpdate) {
+      setDoctorData(docToUpdate);
+      reset(docToUpdate); // Sync form with data
+      setPreviewImage(DOCTOR_IMAGE_URL+docToUpdate?.image); // If image URL is stored
+    }
+  }, [id, doctors]);
+  
+  
 
   const {
     register,
@@ -35,22 +57,41 @@ const AddDoctors = () => {
     }
   };
 
+
+
+
+  
+  
   const onSubmit = async (data) => {
     const formData = new FormData();
-    // The file is already attached via Controller in data.image.
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
 
-    try {
-      setShowStatus(true);
-      await dispatch(addDoctor(formData)).unwrap();
-      reset();
-      setPreviewImage(null);
-    } catch (error) {
-      // Handle error as needed
-    } finally {
-      setTimeout(() => setShowStatus(false), 5000);
+    if (id) {
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+      try {
+        setShowStatus(true);
+        await dispatch(updateDoctor({ id, formData })).unwrap();
+        reset();
+        setPreviewImage(null);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      try {
+        setShowStatus(true);
+        await dispatch(addDoctor(formData)).unwrap();
+        reset();
+        setPreviewImage(null);
+      } catch (error) {
+        // Handle error as needed
+      } finally {
+        setTimeout(() => setShowStatus(false), 5000);
+      }
     }
   };
 
@@ -69,9 +110,7 @@ const AddDoctors = () => {
                 {loading && <p>Loading...</p>}
                 {error && <p className="text-red-500">{error}</p>}
                 {doctor && (
-                  <p className="text-green-500">
-                    Doctor added successfully!
-                  </p>
+                  <p className="text-green-500">Doctor added successfully!</p>
                 )}
               </div>
             )}
@@ -84,7 +123,7 @@ const AddDoctors = () => {
                   >
                     {previewImage ? (
                       <img
-                        src={previewImage}
+                        src={ previewImage}
                         alt="Preview"
                         className="w-20 h-20 rounded-full border object-contain"
                       />
@@ -203,9 +242,7 @@ const AddDoctors = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <div>
-                    <label className="block text-gray-700">
-                      Set Password
-                    </label>
+                    <label className="block text-gray-700">Set Password</label>
                     <input
                       type="password"
                       className="w-full p-2 border rounded mt-2"
@@ -243,9 +280,7 @@ const AddDoctors = () => {
                     )}
                   </div>
                   <div>
-                    <label className="block text-gray-700">
-                      Experience
-                    </label>
+                    <label className="block text-gray-700">Experience</label>
                     <input
                       type="text"
                       className="w-full p-2 border rounded mt-2"
@@ -263,9 +298,7 @@ const AddDoctors = () => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-gray-700">
-                    About Doctor
-                  </label>
+                  <label className="block text-gray-700">About Doctor</label>
                   <textarea
                     className="w-full p-2 border rounded mt-2"
                     rows="4"
@@ -285,7 +318,7 @@ const AddDoctors = () => {
                   type="submit"
                   className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto"
                 >
-                  Submit
+                  {id ? <span>Update</span> : <span>Submit</span>}
                 </button>
               </div>
             </form>

@@ -17,6 +17,8 @@ const Navbar = () => {
   const location = useLocation();
 
   const isPatient = user?.role === "patient";
+  const isAdmin = user?.role === "admin";
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +27,16 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleNavigate = () => {
+    if (isPatient) {
+       navigate("/login")
+    } else if (isAdmin){
+      logout();
+    }else {
+      navigate('/login')
+    }
+  }
 
   return (
     <nav
@@ -37,15 +49,50 @@ const Navbar = () => {
       <div className="w-[85%] mx-auto flex justify-between items-center">
         {/* Mobile Menu Toggle */}
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="lg:hidden focus:outline-none"
-        >
-          <img
-            src={menuOpen ? cross_icon : menu_icon}
-            alt="Menu"
-            className="w-6 h-6"
-          />
-        </button>
+  onClick={() => setMenuOpen(!menuOpen)}
+  className="lg:hidden focus:outline-none z-50"
+>
+  <img
+    src={menuOpen ? cross_icon : menu_icon}
+    alt="Menu"
+    className="w-6 h-6"
+  />
+</button>
+
+{/* Mobile menu */}
+{menuOpen && (
+  <div className="absolute top-14 left-0 w-full bg-primaryColor text-white flex flex-col items-center space-y-6 py-6 shadow-lg z-40 lg:hidden transition-all duration-300">
+    <NavLink
+      to={isPatient ? "/patient" : "/"}
+      className="text-lg hover:text-blue-400 transition-colors"
+      onClick={() => setMenuOpen(false)}
+    >
+      Home
+    </NavLink>
+    <NavLink
+      to="/doctors"
+      className="text-lg hover:text-blue-400 transition-colors"
+      onClick={() => setMenuOpen(false)}
+    >
+      Doctors
+    </NavLink>
+    <NavLink
+      to="/about"
+      className="text-lg hover:text-blue-400 transition-colors"
+      onClick={() => setMenuOpen(false)}
+    >
+      About
+    </NavLink>
+    <NavLink
+      to="/contact-us"
+      className="text-lg hover:text-blue-400 transition-colors"
+      onClick={() => setMenuOpen(false)}
+    >
+      Contact Us
+    </NavLink>
+  </div>
+)}
+
 
         {/* Logo */}
         <h1 className="font-viga tracking-[2px] text-3xl">Carehub</h1>
@@ -77,10 +124,10 @@ const Navbar = () => {
             </div>
           ) : (
             <button
-              onClick={() => navigate("/login")}
+              onClick={handleNavigate}
               className="md:flex items-center gap-1 py-2 bg-buttonColor px-5 rounded-full font-dmSans"
             >
-              <span>Create</span> <span>Account</span>
+             { isAdmin ? <p>Logout</p> :<> <span>Create</span> <span>Account</span></> }
             </button>
           )}
         </div>

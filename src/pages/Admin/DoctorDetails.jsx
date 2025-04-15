@@ -99,7 +99,7 @@ const DoctorDetails = () => {
           <textarea rows="4" value={doctorData?.about || "Loding..."} className="w-full p-3 border border-gray-300 rounded-lg" disabled></textarea>
         </div>
         <div className="pt-4 flex justify-end">
-          <button onClick={() => navigate(`/admin/doctor-editing/${id}`)} className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg flex items-center gap-2">
+          <button onClick={() => navigate(`/admin/edit-doctor/${id}`)} className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg flex items-center gap-2">
             <Edit3 size={18} /> Edit Profile
           </button>
         </div>

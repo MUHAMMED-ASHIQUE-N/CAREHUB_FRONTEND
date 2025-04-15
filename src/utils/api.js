@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:7070/api",
+  baseURL: "https://carehub-backend-1-qtxt.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },

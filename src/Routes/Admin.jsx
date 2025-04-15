@@ -22,6 +22,7 @@ const Admin = () => {
         <Route index element={<Dashboard />} />
         <Route path="appointments" element={<Appointments />} />
         <Route path="add-doctors" element={<AddDoctors />} />
+        <Route path="edit-doctor/:id" element={<AddDoctors />} />
         <Route path="doctors-list" element={<DoctorsList />} />
         <Route path="/doctor/:id" element={<DoctorDetails />} />
         <Route path="/doctor-editing/:id" element={<DoctorDetailsEditingPage />} />

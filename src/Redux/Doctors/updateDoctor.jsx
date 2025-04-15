@@ -6,7 +6,12 @@ export const updateDoctor = createAsyncThunk(
   "doctor/updateDoctor",
   async ({ id, updatedData }, thunkAPI) => {
     try {
-      const response = await api.put(`/doctor/${id}`, updatedData);
+      const response = await api.put(`/doctor/${id}`, updatedData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }) 
+      
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);

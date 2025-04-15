@@ -6,7 +6,7 @@ import ContactUs from '../pages/Common/ContactUs';
 import About from '../pages/Common/About';
 import Login from '../pages/Common/Login';
 import DoctorProfile from '../pages/Common/DoctorProfile';
-import SignUp from '../pages/Common/signUp';
+import SignUp from '../pages/Common/SignUp';
 
 const Common = () => {
   return (
