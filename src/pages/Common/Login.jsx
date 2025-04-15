@@ -6,9 +6,10 @@ import { useForm } from 'react-hook-form'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Navbar from '../../components/Common/Navbar'
+import CircularIndeterminate from '../../components/Layout/CircularIndeterminate'
 const Login = () => {
 
-  const {login} = useContext(AuthContext);
+  const {login,loading } = useContext(AuthContext);
 
   const navigate = useNavigate()
 
@@ -21,6 +22,10 @@ const onSubmit = async (data) => {
  } catch (error) {
   console.log(error);
  } 
+}
+
+if (loading) {
+  return <CircularIndeterminate />;
 }
   return (
 

@@ -29,20 +29,24 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
+    setLoading(true); // Show loader
     try {
       const res = await api.post("user/login", { email, password });
       const token = res.data.token || res.data.adminToken || res.data.phamacyToken;
-      const user = res.data.user || { role: res.data.role }  // Ensure `user` is always an object
-
+      const user = res.data.user || { role: res.data.role };
+  
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
       setUser(user);
-
+  
       navigate(getRedirectPath(user.role), { replace: true });
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false); 
     }
   };
+  
 
   const getRedirectPath = (role) => {
     switch (role) {
