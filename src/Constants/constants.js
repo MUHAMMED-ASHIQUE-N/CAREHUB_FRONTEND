@@ -69,7 +69,5 @@ export const DoctorMenuItems = [
 ];
 
 
-// export const DOCTOR_IMAGE_URL = "http://localhost:7070/";
-
-
-export const DOCTOR_IMAGE_URL ="https://carehub-backend-1-qtxt.onrender.com/";
+export const DOCTOR_IMAGE_URL =
+  "https://carehub-backend-1-qtxt.onrender.com/";
