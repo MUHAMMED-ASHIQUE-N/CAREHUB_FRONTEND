@@ -70,4 +70,4 @@ export const DoctorMenuItems = [
 
 
 export const DOCTOR_IMAGE_URL =
-  "https://carehub-backend-1-qtxt.onrender.com/";
+  "https://carehub-backend-1-qtxt.onrender.com/api/doctor/getDoctor/";
