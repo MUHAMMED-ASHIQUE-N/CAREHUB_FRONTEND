@@ -14,6 +14,7 @@
   // Assets
   import search_icon from "../../assets/assets_frontend/search_icon.svg";
   import down1 from "../../assets/assets_frontend/dropdown_icon.svg";
+import CircularIndeterminate from "../../components/Layout/CircularIndeterminate";
 
   const DoctorsList = () => {
     const dispatch = useDispatch();
@@ -35,6 +36,10 @@
       () => ["all", ...new Set(filteredDoctors.map((doctor) => doctor.speciality))],
       [filteredDoctors]
     );
+    
+console.log(filteredDoctors, "filteredDoctors");
+
+
 
     return (
       <div className="flex flex-col h-screen">
@@ -88,7 +93,6 @@
                 </div>
               </div>
               {/* Status Messages */}
-              {loading && <p className="text-center">Loading doctors...</p>}
               {error && <p className="text-center text-red-500">Error: {error}</p>}
               {/* Selected Specialty Badge */}
               {selectedSpecialty !== "all" && (
@@ -105,9 +109,10 @@
                 </div>
               )}
               {/* Doctors Grid */}
-                    
+                   
       
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 py-6">
+                {loading && <CircularIndeterminate />}
                 {filteredDoctors.map((doctor) => (
                   <DoctorCard
                     key={doctor._id}

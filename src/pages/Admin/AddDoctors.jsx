@@ -9,6 +9,8 @@ import { Outlet, useParams } from "react-router-dom";
 import {
   addDoctor,
   resetDoctorState,
+
+  
 } from "../../Redux/addDoctor/AddDoctorslice";
 import {
   updateDoctor,
