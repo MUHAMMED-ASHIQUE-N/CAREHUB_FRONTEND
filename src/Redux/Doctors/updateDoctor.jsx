@@ -6,7 +6,7 @@ export const updateDoctor = createAsyncThunk(
   "doctor/updateDoctor",
   async ({ id, updatedData }, thunkAPI) => {
     try {
-      const response = await api.put(`/doctor/${id}`, updatedData, {
+      const response = await api.put(`/admin/${id}`, updatedData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

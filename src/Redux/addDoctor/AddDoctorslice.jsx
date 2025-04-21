@@ -1,16 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../utils/api";
 
+
 export const addDoctor = createAsyncThunk(
   "addDoctor/addDoctor",
   async (doctorData, thunkAPI) => {
     try {
-      const response = await api.post("/doctor/addDoctor/", doctorData, {
+      const atoken = localStorage.getItem('token');
+      if (!atoken) {
+        return thunkAPI.rejectWithValue({ error: "No token found" });
+      }
+      const response = await api.post("/admin/add-Doctor", doctorData, {
         headers: {
           "Content-Type": "multipart/form-data",
+       Authorization : `Bearer ${atoken}`,
         },
       });
-      return response.data; // ✅ Fix: Axios handles JSON response automatically
+      return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue({
         error: err.response?.data?.message || err.message,
@@ -18,6 +24,7 @@ export const addDoctor = createAsyncThunk(
     }
   }
 );
+
 
 const AddDoctorsSlice = createSlice({
   name: "addDoctor",

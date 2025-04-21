@@ -24,7 +24,7 @@ const App = () => {
       </Route>
 
       <Route element={<ProtectedRoute role="admin" />}>
-        <Route path="/admin/*" element={<Admin />} />
+        <Route path="/admin/*"  element={<Admin />} />
       </Route>
 
       <Route element={<ProtectedRoute role="doctor" />}>

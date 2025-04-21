@@ -5,7 +5,7 @@ export const getDoctors = createAsyncThunk(
   "doctors/fetchAll",
   async (_, thunkAPI) => {
     try {
-      const response = await api.get("doctor/getDoctor/");
+      const response = await api.get("admin/get-Doctor");
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || err.message);

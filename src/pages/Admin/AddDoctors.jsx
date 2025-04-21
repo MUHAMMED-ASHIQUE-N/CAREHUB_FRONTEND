@@ -16,6 +16,8 @@ import {
   updateDoctor,
   resetUpdateState,
 } from "../../Redux/Doctors/updateDoctor";
+import { Circle } from "lucide-react";
+import CircularIndeterminate from "../../components/Layout/CircularIndeterminate";
 
 const AddDoctors = () => {
   const dispatch = useDispatch();
@@ -27,15 +29,16 @@ const AddDoctors = () => {
 
   const { id } = useParams();
   const { doctors } = useSelector((state) => state.doctors);
-
   useEffect(() => {
     const docToUpdate = doctors.find((doc) => doc._id === id);
+    console.log('Doctor data to update:', docToUpdate);
     if (docToUpdate) {
       setDoctorData(docToUpdate);
       reset(docToUpdate); // Sync form with data
-      setPreviewImage(DOCTOR_IMAGE_URL+docToUpdate?.image); // If image URL is stored
+      setPreviewImage(docToUpdate?.image);
     }
   }, [id, doctors]);
+  
   
   
 
@@ -65,15 +68,15 @@ const AddDoctors = () => {
   
   
   const onSubmit = async (data) => {
+    console.log('Form Data:', data);
     const formData = new FormData();
-
     if (id) {
       Object.entries(data).forEach(([key, value]) => {
         formData.append(key, value);
       });
       try {
         setShowStatus(true);
-        await dispatch(updateDoctor({ id, formData })).unwrap();
+        await dispatch(updateDoctor({ id, updatedData: formData })).unwrap();
         reset();
         setPreviewImage(null);
       } catch (error) {
@@ -83,19 +86,22 @@ const AddDoctors = () => {
       Object.entries(data).forEach(([key, value]) => {
         formData.append(key, value);
       });
-
+  
       try {
         setShowStatus(true);
         await dispatch(addDoctor(formData)).unwrap();
         reset();
         setPreviewImage(null);
       } catch (error) {
-        // Handle error as needed
+        console.log(error);
       } finally {
         setTimeout(() => setShowStatus(false), 5000);
       }
     }
   };
+
+
+  
 
   return (
     <div className="flex flex-col h-screen">
@@ -104,12 +110,16 @@ const AddDoctors = () => {
         <div className="flex-shrink-0">
           <Sidebar menuItems={AdminMenuItems} />
         </div>
-        <div className="flex-1 w-full p-3 md:p-0 bg-gray-100">
+        {loading ? (
+          <div className="flex-1 w-full p-3 md:p-0 bg-gray-100 flex items-center justify-center">
+            <CircularIndeterminate/>
+          </div>
+        ) :( <div className="flex-1 w-full p-3 md:p-0 bg-gray-100">
           <div className="md:p-6 bg-gray-100 w-full overflow-y-auto h-[89vh] scrollbar-hide">
             <h1 className="text-2xl font-bold mb-6">Add Doctor</h1>
             {showStatus && (
               <div>
-                {loading && <p>Loading...</p>}
+             
                 {error && <p className="text-red-500">{error}</p>}
                 {doctor && (
                   <p className="text-green-500">Doctor added successfully!</p>
@@ -325,7 +335,8 @@ const AddDoctors = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>)}
+       
       </div>
       <Outlet />
     </div>

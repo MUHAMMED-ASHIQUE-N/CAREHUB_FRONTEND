@@ -6,7 +6,7 @@ export const deleteDoctor = createAsyncThunk(
   "doctor/deleteDoctor",
   async (id, { dispatch, rejectWithValue }) => {
     try {
-      const response = await api.delete(`/doctor/${id}`);
+      const response = await api.delete(`/admin/${id}`);
       console.log("Doctor deleted successfully:", response.data);
       
       // Fetch the updated list after deletion

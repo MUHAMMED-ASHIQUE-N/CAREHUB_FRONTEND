@@ -117,7 +117,7 @@ console.log(filteredDoctors, "filteredDoctors");
                   <DoctorCard
                     key={doctor._id}
                     id={doctor._id}
-                    image={DOCTOR_IMAGE_URL+doctor.image}
+                    image={doctor.image}
                     name={doctor.name}
                     speciality={doctor.speciality}
 

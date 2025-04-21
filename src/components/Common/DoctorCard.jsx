@@ -1,15 +1,18 @@
 import React, { useContext } from "react";
 import { useInView } from "react-intersection-observer";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../../context/AuthContext";
 import {deleteDoctor} from "../../Redux/Doctors/DeleteDoctor";
+import { CircleX} from "lucide-react";
 
 const DoctorCard = ({ id, name, speciality, image }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
+  const location = useLocation();
+  const isAdminPage = location.pathname.includes("admin/");
 
   const handleDelete = () => {
     dispatch(deleteDoctor(id));
@@ -19,7 +22,7 @@ const DoctorCard = ({ id, name, speciality, image }) => {
     if (user?.role === "patient") {
       navigate(`/doctor-profile/${id}`);
     } else if (user?.role === "admin") {
-      navigate(`/admin/doctor/${id}`);
+      navigate(`/admin/edit-doctor/${id}`);
     } else {
       navigate(`/login`);
     }
@@ -29,6 +32,8 @@ const DoctorCard = ({ id, name, speciality, image }) => {
     triggerOnce: true,
     threshold: 0.1,
   });
+
+
 
   return (
     <div
@@ -50,13 +55,13 @@ const DoctorCard = ({ id, name, speciality, image }) => {
           <h1 className="font-bold font-arimo">{name}</h1>
           <p className="text-gray-500 font-arimo">{speciality}</p>
         </div>
-        {user?.role === "admin" && (
+        { isAdminPage && user?.role === "admin" && (
           <button
             onClick={handleDelete}
-            className="bg-red-500 text-white px-3 py-1 rounded-full"
+            className="bg-red-500 text-white  rounded-full"
        
           >
-         deke
+         <CircleX/>
           </button>
         )}
       </div>
